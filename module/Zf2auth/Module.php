@@ -12,8 +12,8 @@ use Zf2auth\Entity\Resources;
 use Zf2auth\Table\ResourcesTable;
 use Zf2auth\Entity\RoleResources;
 use Zf2auth\Table\RoleResourcesTable;
-use Zf2auth\Entity\Fbprofiles;          // <-- For Facebok
-use Zf2auth\Table\FbprofilesTable;      // <-- For Facebok
+use Zf2auth\Entity\Fbprofiles;          // <-- For Facebook
+use Zf2auth\Table\FbprofilesTable;      // <-- For Facebook
 use Zf2auth\Entity\Zf2AuthStorage;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
@@ -99,12 +99,12 @@ class Module
                     $table                          = new RoleResourcesTable($dbAdapter);
                     return $table;
                 },
-                'Zf2auth\Table\FbprofilesTable' => function($sm) {   // <-- For Facebok
+                'Zf2auth\Table\FbprofilesTable' => function($sm) {   // <-- For Facebook
                     $dbAdapter       = $sm->get('Zend\Db\Adapter\Adapter');
                     $table           = new FbprofilesTable($dbAdapter);
                     return $table;
                 },
-                'FacebookConfig' => function($sm) {   // <-- For Facebok
+                'FacebookConfig' => function($sm) {   // <-- For Facebook
                     $config                        = $sm->get('config');
                     return $config['facebook_config'];
                 },

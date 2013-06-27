@@ -10,7 +10,7 @@ return array(
             'Zf2auth\Controller\UserRoles'     => 'Zf2auth\Controller\UserRolesController',
             'Zf2auth\Controller\Resources'     => 'Zf2auth\Controller\ResourcesController',
             'Zf2auth\Controller\RoleResources' => 'Zf2auth\Controller\RoleResourcesController',
-            'Zf2auth\Controller\Fbprofiles'    => 'Zf2auth\Controller\FbprofilesController', // <-- For Facebok
+            'Zf2auth\Controller\Fbprofiles'    => 'Zf2auth\Controller\FbprofilesController', // <-- For Facebook
         ),
     ),
     'router'          => array(
