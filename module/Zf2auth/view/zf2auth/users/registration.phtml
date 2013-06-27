@@ -1,0 +1,41 @@
+<div class="row-fluid">
+    <div class="span12">
+        <div id="newToHossbragRegForm" class="new-to-hossbrag outer-frame-bottom">
+            <div class="outer-frame">
+                <div class="inner-frame">
+                    <h1 class="blue">Sign Up Now?</h1>
+                    <h5 class="black">It’s Free!</h5>
+
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <div style="padding-right: 20px;">
+                                <div class="black pad-10">
+                                    <strong>To join, just fill in <br> the information below</strong>
+                                </div>
+                                <div class="reg-form-wrp">
+                                    <?php echo $this->partial('zf2auth/users/registration_form.phtml'); ?>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="span6" style="border-left: 1px solid #ccc;">
+                            <div style="padding-right: 20px;">
+                                <div class="black pad-10">
+                                    <strong>Or, save time and sign up <br> with Facebook or Twitter</strong>
+                                </div>
+                                <div>
+                                    <a href="<?php // echo $this->url('scn-social-auth-user/login/provider', array('provider' => 'facebook'))   ?>"><img src="<?php echo $this->basePath('/bootstrap/images/fb_signup.png') ?>" alt="Facebook Signup"/></a>
+                                    <div class="or_divider pad-top-20 pad-bottom-20"><strong>or</strong></div>
+                                    <a href="#"><img src="<?php echo $this->basePath('/bootstrap/images/twitter_signup.png') ?>" alt="Twitter Signup"/></a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="pad-bottom-10"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

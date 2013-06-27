@@ -1,0 +1,55 @@
+<?php
+if (!empty($getIdentity)) {
+    $nameString = $userData->username;
+    // $nameString = (strlen($nameString) > 14) ? substr($nameString, 0, 11) . '...' : $nameString;
+    echo "Welcome, " . $nameString;
+    ?>
+    | <a href="<?php echo $this->basePath('/users/logout'); ?>">Logout</a>
+
+    <?php
+} else {
+
+    $form = $this->form;
+    $form->setAttribute('action', $this->url('users/authenticate'));
+    $form->setAttribute('class', 'navbar-form pull-right');
+    $form->setAttribute('id', 'loginForm');
+
+    $form->prepare();
+
+    echo $this->form()->openTag($form);
+    ?>
+    <?php
+    $name = $form->get('username');
+    $name->setAttribute('class', 'span2');
+    echo $this->formInput($name);
+
+    $password = $form->get('password');
+    $password->setAttribute('class', 'span2');
+    echo $this->formInput($password);
+
+    echo $this->formElement($form->get('submit'));
+    ?>
+    <a href="user/login/facebook<?php // echo $this->url('scn-social-auth-user/login/provider', array('provider' => 'facebook'))         ?>"
+       class="btn" style="padding: 3px 0px 3px 0; text-align: left">FB Login</a>
+    <br>
+    <!--            <div class="pull-right forgetdiv loginhome-forget">
+                    <label class="checkbox" style="width: 170px;">
+    <?php
+    $rememberme = $form->get('rememberme');
+    echo $this->formInput($rememberme);
+    ?>
+                        <span class="txt-hossbrag-gotham txt-small black">keep me logged in</span>
+                    </label>
+                    <label class="checkbox"  style="width: 165px;">
+                        <a href="<?php echo $this->url('users/forget-password') ?>" title=""><span class="txt-hossbrag-gotham txt-small black">forgot your password?</span></a>
+                    </label>
+                </div>-->
+
+    <?php
+//    echo $this->formElement($form->get('submit'));
+//    foreach ($form as $element) :
+//        echo $this->formElement($element);
+//
+//    endforeach;
+    echo $this->form()->closeTag();
+}

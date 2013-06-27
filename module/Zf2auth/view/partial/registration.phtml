@@ -1,0 +1,42 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+        utils.validateForm("homeSignupform");
+    });
+</script>
+<?php
+if (!empty($getIdentity)) {
+    echo "You are Already registered";
+    ?>
+    <a href="<?php echo $this->basePath('/users/logout'); ?>">Logout</a>
+    <?php
+} else {
+
+    $form = $this->form;
+    $form->setAttribute('action', $this->url('users/registration'));
+    $form->setAttribute('id', 'homeSignupform');
+    $form->prepare();
+    echo $this->form()->openTag($form);
+    foreach ($form as $element) :
+        ?>
+        <div class="control-group <?php if ($this->formElementErrors($element)) echo "error" ?>">
+            <div class="controls">
+                <?php
+                echo $this->formElement($element);
+                if ($this->formElementErrors($element)):
+                    ?>
+                    <span class="help-inline"><?php echo $this->formElementErrors($element); ?></span>
+                    <?php
+                endif;
+                ?>
+            </div>
+        </div>
+        <?php
+        if ($element->getName() == "password") {
+            echo '<div id="complexity" class=""></div>';
+        }
+    endforeach;
+    ?>
+    <button class="btn btn-large btn-success  join-now fullwidth" type="submit">Join Now</button>
+    <?php
+    echo $this->form()->closeTag();
+}

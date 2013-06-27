@@ -1,0 +1,41 @@
+<?php
+$form = $this->form;
+$form->setAttribute('action', $this->url('users/registration'));
+$form->setAttribute('id', 'registrationForm');
+$form->prepare();
+echo $this->form()->openTag($form);
+
+$error = "";
+foreach ($form as $element) :
+    if ($this->formElementErrors($element)):
+        $error[] = $this->formElementErrors($element);
+    endif;
+endforeach;
+
+echo $this->partial('application/flash-message/processMessage.phtml', array('flashMessages' => $this->flashMessages, 'error'         => $this->error));
+foreach ($form as $element) :
+    ?>
+    <div class="control-group <?php if ($this->formElementErrors($element)) echo "error" ?>">
+        <div class="controls">
+            <?php
+            echo $this->formElement($element);
+            /*
+              if ($this->formElementErrors($element)):
+              ?>
+              <span class="help-inline"><?php echo $this->formElementErrors($element); ?></span>
+              <?php
+              endif;
+             *
+             */
+            ?>
+        </div>
+    </div>
+    <?php
+    if ($element->getName() == "password") {
+        echo '<div id="complexity" style="margin-left:15px;"></div>';
+    }
+endforeach;
+?>
+<button class="btn btn-large btn-success  join-now" style='width: 160px;' type="submit">Join Now</button>
+<?php
+echo $this->form()->closeTag();

@@ -1,0 +1,9 @@
+<?php
+
+foreach ($flashMessages as $message) {
+    if (isset($message["error"]))
+        echo '<div class="alert alert-error " style="text-align:center;"><b >' . $message["error"] . '</b></div>';
+    elseif (isset($message["success"]))
+        echo '<div class="alert alert-success " style="text-align:center;"><b >' . $message["success"] . '</b></div>';;
+}
+

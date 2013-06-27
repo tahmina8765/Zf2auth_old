@@ -1,0 +1,9 @@
+<?php
+//echo "<pre>"; print_r($error); die();
+if (isset($flashMessages) && count($flashMessages) > 0) {
+    echo $this->partial('application/flash-message/message.phtml', array('flashMessages' => $flashMessages));
+}
+
+if (isset($error) && count($error)>0) {
+    echo $this->partial('application/flash-message/message.phtml', array('flashMessages' => $error));
+}

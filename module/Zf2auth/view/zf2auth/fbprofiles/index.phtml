@@ -1,0 +1,131 @@
+<?php
+$title     = 'Fbprofiles';
+$this->headTitle($title);
+$url_order = 'ASC';
+if ($order_by == 'name') {
+    $url_order = ($order == 'ASC' ) ? 'DESC' : 'ASC';
+} elseif ($order_by == 'first_name') {
+    $url_order = ($order == 'ASC' ) ? 'DESC' : 'ASC';
+} elseif ($order_by == 'last_name') {
+    $url_order = ($order == 'ASC' ) ? 'DESC' : 'ASC';
+} elseif ($order_by == 'link') {
+    $url_order = ($order == 'ASC' ) ? 'DESC' : 'ASC';
+} elseif ($order_by == 'username') {
+    $url_order = ($order == 'ASC' ) ? 'DESC' : 'ASC';
+} elseif ($order_by == 'gender') {
+    $url_order = ($order == 'ASC' ) ? 'DESC' : 'ASC';
+} elseif ($order_by == 'timezone') {
+    $url_order = ($order == 'ASC' ) ? 'DESC' : 'ASC';
+} elseif ($order_by == 'locale') {
+    $url_order = ($order == 'ASC' ) ? 'DESC' : 'ASC';
+} elseif ($order_by == 'verified') {
+    $url_order = ($order == 'ASC' ) ? 'DESC' : 'ASC';
+} elseif ($order_by == 'updated_time') {
+    $url_order = ($order == 'ASC' ) ? 'DESC' : 'ASC';
+}
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<p>
+    <a href="<?php echo $this->url('fbprofiles', array('action' => 'add')); ?>">Add new fbprofiles</a>
+</p>
+
+
+<?php
+$form      = $this->form;
+$form->setAttribute('action', $this->url('fbprofiles', array('action' => 'search')));
+$form->prepare();
+
+echo $this->form()->openTag($form);
+foreach ($form as $element) :
+    ?>
+    <div class="control-group <?php if ($this->formElementErrors($element)) echo "error" ?>">
+        <label class="control-label"><?php echo $element->getLabel() ?></label>
+        <div class="controls">
+            <?php
+            echo $this->formElement($element);
+            if ($this->formElementErrors($element)):
+                ?>
+                <span class="help-inline"><?php echo $this->formElementErrors($element); ?></span>
+                <?php
+            endif;
+            ?>
+        </div>
+    </div>
+    <?php
+endforeach;
+echo $this->form()->closeTag();
+?>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th><a href="<?php echo $this->url('fbprofiles', array('order_by'  => 'name', 'order'     => $url_order, 'search_by' => $search_by)); ?>">Name <?php if ($order_by == 'name'): ?><i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i><?php endif; ?></a>
+            </th>
+            <th><a href="<?php echo $this->url('fbprofiles', array('order_by'  => 'first_name', 'order'     => $url_order, 'search_by' => $search_by)); ?>">First Name <?php if ($order_by == 'first_name'): ?><i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i><?php endif; ?></a>
+            </th>
+            <th><a href="<?php echo $this->url('fbprofiles', array('order_by'  => 'last_name', 'order'     => $url_order, 'search_by' => $search_by)); ?>">Last Name <?php if ($order_by == 'last_name'): ?><i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i><?php endif; ?></a>
+            </th>
+            <th><a href="<?php echo $this->url('fbprofiles', array('order_by'  => 'link', 'order'     => $url_order, 'search_by' => $search_by)); ?>">Link <?php if ($order_by == 'link'): ?><i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i><?php endif; ?></a>
+            </th>
+            <th><a href="<?php echo $this->url('fbprofiles', array('order_by'  => 'username', 'order'     => $url_order, 'search_by' => $search_by)); ?>">Username <?php if ($order_by == 'username'): ?><i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i><?php endif; ?></a>
+            </th>
+            <th><a href="<?php echo $this->url('fbprofiles', array('order_by'  => 'gender', 'order'     => $url_order, 'search_by' => $search_by)); ?>">Gender <?php if ($order_by == 'gender'): ?><i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i><?php endif; ?></a>
+            </th>
+            <th><a href="<?php echo $this->url('fbprofiles', array('order_by'  => 'timezone', 'order'     => $url_order, 'search_by' => $search_by)); ?>">Timezone <?php if ($order_by == 'timezone'): ?><i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i><?php endif; ?></a>
+            </th>
+            <th><a href="<?php echo $this->url('fbprofiles', array('order_by'  => 'locale', 'order'     => $url_order, 'search_by' => $search_by)); ?>">Locale <?php if ($order_by == 'locale'): ?><i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i><?php endif; ?></a>
+            </th>
+            <th><a href="<?php echo $this->url('fbprofiles', array('order_by'  => 'verified', 'order'     => $url_order, 'search_by' => $search_by)); ?>">Verified <?php if ($order_by == 'verified'): ?><i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i><?php endif; ?></a>
+            </th>
+            <th><a href="<?php echo $this->url('fbprofiles', array('order_by'  => 'updated_time', 'order'     => $url_order, 'search_by' => $search_by)); ?>">Updated Time <?php if ($order_by == 'updated_time'): ?><i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i><?php endif; ?></a>
+            </th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($paginator as $row) : ?>
+            <tr>
+                <td><?php echo $this->escapeHtml($row->name); ?></td>
+                <td><?php echo $this->escapeHtml($row->first_name); ?></td>
+                <td><?php echo $this->escapeHtml($row->last_name); ?></td>
+                <td><?php echo $this->escapeHtml($row->link); ?></td>
+                <td><?php echo $this->escapeHtml($row->username); ?></td>
+                <td><?php echo $this->escapeHtml($row->gender); ?></td>
+                <td><?php echo $this->escapeHtml($row->timezone); ?></td>
+                <td><?php echo $this->escapeHtml($row->locale); ?></td>
+                <td><?php echo $this->escapeHtml($row->verified); ?></td>
+                <td><?php echo $this->escapeHtml($row->updated_time); ?></td>
+
+                <td>
+                    <a href="<?php echo $this->url('fbprofiles', array('action' => 'edit', 'id'     => $row->id)); ?>" class="btn btn-primary btn-mini edit-row">Edit</a>
+                    <?php
+                    $delurl = $this->url('fbprofiles', array(
+                        'action' => 'delete',
+                        'id'     => $row->id,
+                    ));
+                    ?>
+                    <div style="display: none;">
+                        <form action="<?php echo $delurl; ?>" method="post" id="post_<?php echo $row->id; ?>" name="post_<?php echo $row->id; ?>">
+                            <input type="hidden" name="id" value="<?php echo (int) $row->id; ?>" />
+                        </form>
+                    </div>
+                    <a onclick="if (confirm('Are you sure you want to delete <?php echo $row->id; ?>?')) {
+                                    document.<?php echo "post_" . $row->id; ?>.submit();
+                                }
+                                event.returnValue = false;
+                                return false;" href="#" class="btn btn-primary btn-mini edit-row">Delete</a>
+
+                </td>
+
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+
+
+<?php
+echo $this->paginationControl(
+        $paginator, 'Sliding', 'paginator-slide', array('order_by'   => $order_by, 'order'      => $order, 'search_by'  => $search_by, 'pageAction' => $pageAction)
+);
+?>
+
