@@ -29,8 +29,7 @@ if (!empty($getIdentity)) {
 
     echo $this->formElement($form->get('submit'));
     ?>
-    <a href="user/login/facebook<?php // echo $this->url('scn-social-auth-user/login/provider', array('provider' => 'facebook'))         ?>"
-       class="btn" style="padding: 3px 0px 3px 0; text-align: left">FB Login</a>
+    <a href="<?php echo $this->url('fbprofiles', array('action' => 'registration')); ?>" class="btn">FB Login</a>
     <br>
     <!--            <div class="pull-right forgetdiv loginhome-forget">
                     <label class="checkbox" style="width: 170px;">

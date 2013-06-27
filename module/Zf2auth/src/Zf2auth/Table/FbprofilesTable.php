@@ -6,13 +6,16 @@ use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\TableGateway\AbstractTableGateway;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\Sql\Sql;
 use Zend\Db\Sql\Select;
+use Zend\Db\Sql\Predicate\Expression;
 use Zf2auth\Entity\Fbprofiles;
 
 class FbprofilesTable extends AbstractTableGateway
 {
 
-    protected $table = 'fbprofiles';
+    protected $table     = 'fbprofiles';
+    protected $usertable = 'users';
 
     public function __construct(Adapter $adapter)
     {
@@ -44,22 +47,24 @@ class FbprofilesTable extends AbstractTableGateway
         return $row;
     }
 
-    public function saveFbprofiles(Fbprofiles $formdata)
+    public function saveFbprofiles(Fbprofiles $fbprofiles)
     {
         $data = array(
-            'name'         => $formdata->name,
-            'first_name'   => $formdata->first_name,
-            'last_name'    => $formdata->last_name,
-            'link'         => $formdata->link,
-            'username'     => $formdata->username,
-            'gender'       => $formdata->gender,
-            'timezone'     => $formdata->timezone,
-            'locale'       => $formdata->locale,
-            'verified'     => $formdata->verified,
-            'updated_time' => $formdata->updated_time,
+            'user_id'      => $fbprofiles->user_id,
+            'facebook_id'  => $fbprofiles->facebook_id,
+            'name'         => $fbprofiles->name,
+            'first_name'   => $fbprofiles->first_name,
+            'last_name'    => $fbprofiles->last_name,
+            'link'         => $fbprofiles->link,
+            'username'     => $fbprofiles->username,
+            'gender'       => $fbprofiles->gender,
+            'timezone'     => $fbprofiles->timezone,
+            'locale'       => $fbprofiles->locale,
+            'verified'     => $fbprofiles->verified,
+            'updated_time' => $fbprofiles->updated_time,
         );
 
-        $id = (int) $formdata->id;
+        $id = (int) $fbprofiles->id;
         if ($id == 0) {
             $this->insert($data);
         } else {
@@ -69,6 +74,70 @@ class FbprofilesTable extends AbstractTableGateway
                 throw new \Exception('Form id does not exist');
             }
         }
+    }
+
+    public function registrationFbprofiles(Fbprofiles $fbprofiles)
+    {
+        $adapter = $this->adapter;
+
+
+        $usersdata = array(
+            'username'    => $fbprofiles->username,
+            'email'       => $fbprofiles->email,
+            'password'    => md5($fbprofiles->username),
+            'is_disabled' => 0,
+            'created'     => date('Y-m-d H:i:s'),
+        );
+
+
+
+        $this->adapter->getDriver()->getConnection()->beginTransaction();
+        $sqlusers      = new Sql($this->adapter);
+        $insertusers   = $sqlusers->insert('users')->values(
+                $usersdata
+        );
+        $statement     = $sqlusers->getSqlStringForSqlObject($insertusers);
+        $resultSet     = $adapter->query($statement, $adapter::QUERY_MODE_EXECUTE);
+        $resultSet->buffer();
+        $user_id       = $resultSet->getGeneratedValue();
+        $profiledata   = array(
+            'user_id'    => $user_id,
+            'first_name' => $fbprofiles->first_name,
+            'last_name'  => $fbprofiles->last_name,
+            'created'    => date('Y-m-d H:i:s'),
+        );
+        $sqlprofile    = new Sql($this->adapter);
+        $insertprofile = $sqlprofile->insert('profiles')->values(
+                $profiledata
+        );
+        $statement     = $sqlprofile->getSqlStringForSqlObject($insertprofile);
+        $resultSet     = $adapter->query($statement, $adapter::QUERY_MODE_EXECUTE);
+        $resultSet->buffer();
+
+        $data = array(
+            'user_id'      => $user_id,
+            'facebook_id'  => $fbprofiles->facebook_id,
+            'name'         => $fbprofiles->name,
+            'first_name'   => $fbprofiles->first_name,
+            'last_name'    => $fbprofiles->last_name,
+            'link'         => $fbprofiles->link,
+            'username'     => $fbprofiles->username,
+            'gender'       => $fbprofiles->gender,
+            'timezone'     => $fbprofiles->timezone,
+            'locale'       => $fbprofiles->locale,
+            'verified'     => $fbprofiles->verified,
+            'updated_time' => $fbprofiles->updated_time,
+        );
+
+        $sqlfbprofile    = new Sql($this->adapter);
+        $insertfbprofile = $sqlfbprofile->insert('fbprofiles')->values(
+                $data
+        );
+        $statement       = $sqlfbprofile->getSqlStringForSqlObject($insertfbprofile);
+        $resultSet       = $adapter->query($statement, $adapter::QUERY_MODE_EXECUTE);
+        $resultSet->buffer();
+
+        $this->adapter->getDriver()->getConnection()->commit();
     }
 
     public function deleteFbprofiles($id)

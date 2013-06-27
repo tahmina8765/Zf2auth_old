@@ -2,19 +2,22 @@
 
 namespace Zf2auth\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+// use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zf2auth\Entity\Fbprofiles;
 use Zf2auth\Form\FbprofilesForm;
 use Zf2auth\Form\FbprofilesSearchForm;
+use Zf2auth\Form\RegistrationForm;
 use Zend\Db\Sql\Select;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\Iterator as paginatorIterator;
+use Zf2auth\Library\Facebook\Facebook;
 
-class FbprofilesController extends AbstractActionController
+class FbprofilesController extends Zf2authAppController
 {
 
     protected $fbprofilesTable;
+    protected $facebookConfig;
 
     public function getFbprofilesTable()
     {
@@ -23,6 +26,15 @@ class FbprofilesController extends AbstractActionController
             $this->fbprofilesTable = $sm->get('Zf2auth\Table\FbprofilesTable');
         }
         return $this->fbprofilesTable;
+    }
+
+    public function getFacebookConfig()
+    {
+        if (!$this->facebookConfig) {
+            $sm                   = $this->getServiceLocator();
+            $this->facebookConfig = $sm->get('FacebookConfig');
+        }
+        return $this->facebookConfig;
     }
 
     public function searchAction()
@@ -229,6 +241,111 @@ class FbprofilesController extends AbstractActionController
             'id'         => $id,
             'fbprofiles' => $this->getFbprofilesTable()->getFbprofiles($id)
         );
+    }
+
+    public function registrationAction()
+    {
+        $facebookConfig = $this->getFacebookConfig();
+        // Create our Application instance (replace this with your appId and secret).
+        $facebook       = new Facebook(array(
+            'appId'      => $facebookConfig['appId'],
+            'secret'     => $facebookConfig['secret'],
+            'channelUrl' => 'http://localhost/Zf2auth/public/fbprofiles/registration',
+        ));
+
+        // Get User ID
+        $user = $facebook->getUser();
+
+        if ($user > 0) {
+            try {
+                // Proceed knowing you have a logged in user who's authenticated.
+                $user_profile = $facebook->api('/me');
+                $logoutUrl    = $facebook->getLogoutUrl();
+                /**
+                 * Check This User already exist in Database
+                 */
+                $existUser    = $this->getUsersTable()->isExistEmail($user_profile['email']);
+                if ($existUser->count() > 0) {
+                    // echo "User Already Exist";
+                } else {
+                    $formdata                 = array();
+                    $formdata['facebook_id']  = $user_profile['id'];
+                    $formdata['name']         = $user_profile['name'];
+                    $formdata['first_name']   = $user_profile['first_name'];
+                    $formdata['last_name']    = $user_profile['last_name'];
+                    $formdata['link']         = $user_profile['link'];
+                    $formdata['username']     = $user_profile['username'];
+                    $formdata['gender']       = $user_profile['gender'];
+                    $formdata['email']        = $user_profile['email'];
+                    $formdata['timezone']     = $user_profile['timezone'];
+                    $formdata['locale']       = $user_profile['locale'];
+                    $formdata['verified']     = $user_profile['verified'];
+                    $formdata['updated_time'] = $user_profile['updated_time'];
+
+                    $fbprofiles = new Fbprofiles();
+
+                    $form = new FbprofilesForm();
+                    $form->bind($fbprofiles);
+                    $form->setInputFilter($fbprofiles->getInputFilter());
+                    $form->setData($formdata);
+                    if ($form->isValid()) {
+                        $fbprofiles->exchangeArray($formdata);
+                        $this->getFbprofilesTable()->registrationFbprofiles($form->getData());
+                    }
+                }
+
+                $this->authenticateWithFacebook($user_profile);
+                $facebook->destroySession();
+
+                /**
+                 * If not exist then Complete Registration
+                 */
+                /**
+                 * If Exist then directly login to the system
+                 */
+            } catch (FacebookApiException $e) {
+                error_log($e);
+                $user = null;
+            }
+            return $this->redirect()->toRoute('home');
+        } else {
+            $loginUrl = $facebook->getLoginUrl(
+                    array(
+                        'scope' => 'email'
+                    )
+            );
+            $form = new RegistrationForm();
+            return array(
+                'form' => $form,
+                'loginUrl'   => $loginUrl,
+
+            );
+
+        }
+
+
+        // Login or logout url will be needed depending on current user state.
+//        if ($user) {
+//            $logoutUrl = $facebook->getLogoutUrl();
+//        } else {
+//            $loginUrl = $facebook->getLoginUrl();
+//        }
+    }
+
+    protected function authenticateWithFacebook($user_profile = array())
+    {
+        $this->getAuthService()->setStorage($this->getSessionStorage());
+
+        $currentUserObj = $this->getUsersTable()->fetchAllByIdentity($user_profile['username']);
+        if (!empty($currentUserObj)) {
+            foreach ($currentUserObj as $user) {
+                $currentUser             = $user;
+            }
+        }
+        $currentUser['identity'] = $user_profile['username'];
+        $currentUser['rolename'] = 'Administrator';
+        $this->getAuthService()->getStorage()->write($currentUser);
+        return $this->redirect()->toRoute('home');
     }
 
 }

@@ -104,9 +104,7 @@ class UsersTable extends AbstractTableGateway
             unset($data['is_disabled']);
         }
 
-        echo "<pre>";
-        print_r($data);
-        die();
+        
         $id = (int) $users->id;
         if ($id == 0) {
             $this->insert($data);
@@ -355,6 +353,8 @@ class UsersTable extends AbstractTableGateway
         $resultSet->buffer();
         return $resultSet;
     }
+
+
 
     public function changeEmial($email, $id)
     {

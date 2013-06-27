@@ -16,52 +16,51 @@ use Zend\Db\Sql\Select;
 use Zend\Authentication\Result;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\Iterator as paginatorIterator;
-use Application\Controller\AppController;
 
-class UsersController extends AppController
+class UsersController extends Zf2authAppController
 {
 
-    protected $usersTable;
-    protected $storage;
-    protected $authservice;
+//    protected $usersTable;
+//    protected $storage;
+//    protected $authservice;
 
     /**
      *
      * @return type
      */
-    public function getSessionStorage()
-    {
-        if (!$this->storage) {
-            $this->storage = $this->getServiceLocator()->get('Zf2auth\Model\Zf2AuthStorage');
-        }
-
-        return $this->storage;
-    }
-
-    /**
-     *
-     * @return type
-     */
-    public function getAuthService()
-    {
-        if (!$this->authservice) {
-            $this->authservice = $this->getServiceLocator()->get('AuthService');
-        }
-        return $this->authservice;
-    }
+//    public function getSessionStorage()
+//    {
+//        if (!$this->storage) {
+//            $this->storage = $this->getServiceLocator()->get('Zf2auth\Model\Zf2AuthStorage');
+//        }
+//
+//        return $this->storage;
+//    }
 
     /**
      *
      * @return type
      */
-    public function getUsersTable()
-    {
-        if (!$this->usersTable) {
-            $sm               = $this->getServiceLocator();
-            $this->usersTable = $sm->get('Zf2auth\Table\UsersTable');
-        }
-        return $this->usersTable;
-    }
+//    public function getAuthService()
+//    {
+//        if (!$this->authservice) {
+//            $this->authservice = $this->getServiceLocator()->get('AuthService');
+//        }
+//        return $this->authservice;
+//    }
+
+    /**
+     *
+     * @return type
+     */
+//    public function getUsersTable()
+//    {
+//        if (!$this->usersTable) {
+//            $sm               = $this->getServiceLocator();
+//            $this->usersTable = $sm->get('Zf2auth\Table\UsersTable');
+//        }
+//        return $this->usersTable;
+//    }
 
     /**
      *

@@ -18,8 +18,17 @@ class FbprofilesForm extends Form
         $id = new Element\Hidden('id');
         $id->setAttribute('class', 'primarykey');
 
+        $user_id     = new Element\Text('user_id');
+        $user_id->setLabel('user_id')
+                ->setAttribute('class', 'required')
+                ->setAttribute('placeholder', 'user_id');
 
-        $name = new Element\Text('name');
+        $facebook_id = new Element\Text('facebook_id');
+        $facebook_id->setLabel('facebook_id')
+                ->setAttribute('class', 'required')
+                ->setAttribute('placeholder', 'facebook_id');
+
+        $name        = new Element\Text('name');
         $name->setLabel('Name')
                 ->setAttribute('class', 'required')
                 ->setAttribute('placeholder', 'Name');
@@ -86,6 +95,8 @@ class FbprofilesForm extends Form
                 ->setAttribute('class', 'btn btn-primary');
 
         $this->add($id);
+        $this->add($user_id);
+        $this->add($facebook_id);
         $this->add($name);
         $this->add($first_name);
         $this->add($last_name);

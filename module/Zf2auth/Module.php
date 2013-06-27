@@ -100,9 +100,13 @@ class Module
                     return $table;
                 },
                 'Zf2auth\Table\FbprofilesTable' => function($sm) {   // <-- For Facebok
-                    $dbAdapter                     = $sm->get('Zend\Db\Adapter\Adapter');
-                    $table                         = new FbprofilesTable($dbAdapter);
+                    $dbAdapter       = $sm->get('Zend\Db\Adapter\Adapter');
+                    $table           = new FbprofilesTable($dbAdapter);
                     return $table;
+                },
+                'FacebookConfig' => function($sm) {   // <-- For Facebok
+                    $config                        = $sm->get('config');
+                    return $config['facebook_config'];
                 },
                 'Zf2auth\Model\Zf2AuthStorage' => function($sm) {
                     return new \Zf2auth\Model\Zf2AuthStorage('zf2authSession');

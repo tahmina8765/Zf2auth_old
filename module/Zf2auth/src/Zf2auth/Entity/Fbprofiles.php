@@ -10,11 +10,14 @@ use Zend\InputFilter\InputFilterInterface;
 class Fbprofiles implements InputFilterAwareInterface
 {
 
+    public $user_id;
+    public $facebook_id;
     public $name;
     public $first_name;
     public $last_name;
     public $link;
     public $username;
+    public $email;
     public $gender;
     public $timezone;
     public $locale;
@@ -25,11 +28,14 @@ class Fbprofiles implements InputFilterAwareInterface
     public function exchangeArray($data)
     {
         $this->id           = (isset($data['id'])) ? $data['id'] : null;
+        $this->user_id      = (isset($data['user_id'])) ? $data['user_id'] : null;
+        $this->facebook_id  = (isset($data['facebook_id'])) ? $data['facebook_id'] : null;
         $this->name         = (isset($data['name'])) ? $data['name'] : null;
         $this->first_name   = (isset($data['first_name'])) ? $data['first_name'] : null;
         $this->last_name    = (isset($data['last_name'])) ? $data['last_name'] : null;
         $this->link         = (isset($data['link'])) ? $data['link'] : null;
         $this->username     = (isset($data['username'])) ? $data['username'] : null;
+        $this->email        = (isset($data['email'])) ? $data['email'] : null;
         $this->gender       = (isset($data['gender'])) ? $data['gender'] : null;
         $this->timezone     = (isset($data['timezone'])) ? $data['timezone'] : null;
         $this->locale       = (isset($data['locale'])) ? $data['locale'] : null;
@@ -50,6 +56,26 @@ class Fbprofiles implements InputFilterAwareInterface
     public function getId()
     {
         return $this->id;
+    }
+
+    public function setUser_id($id)
+    {
+        $this->user_id = $user_id;
+    }
+
+    public function getUser_id()
+    {
+        return $this->user_id;
+    }
+
+    public function setFacebook_id($id)
+    {
+        $this->facebook_id = $facebook_id;
+    }
+
+    public function getFacebook_id()
+    {
+        return $this->facebook_id;
     }
 
     public function setName($name)
@@ -100,6 +126,16 @@ class Fbprofiles implements InputFilterAwareInterface
     public function getUsername()
     {
         return $this->username;
+    }
+
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    public function getEmail()
+    {
+        return $this->email;
     }
 
     public function setGender($gender)
@@ -173,6 +209,16 @@ class Fbprofiles implements InputFilterAwareInterface
 
 
             $inputFilter->add($factory->createInput(array(
+                        'name'     => 'user_id',
+                        'required' => false,
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                        'name'     => 'facebook_id',
+                        'required' => false,
+            )));
+
+            $inputFilter->add($factory->createInput(array(
                         'name'     => 'name',
                         'required' => false,
             )));
@@ -194,6 +240,11 @@ class Fbprofiles implements InputFilterAwareInterface
 
             $inputFilter->add($factory->createInput(array(
                         'name'     => 'username',
+                        'required' => false,
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                        'name'     => 'email',
                         'required' => false,
             )));
 

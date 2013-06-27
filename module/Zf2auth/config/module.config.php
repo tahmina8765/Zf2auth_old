@@ -3,7 +3,7 @@
 namespace Zf2auth;
 
 return array(
-    'controllers'  => array(
+    'controllers'     => array(
         'invokables' => array(
             'Zf2auth\Controller\Users'         => 'Zf2auth\Controller\UsersController',
             'Zf2auth\Controller\Roles'         => 'Zf2auth\Controller\RolesController',
@@ -13,7 +13,7 @@ return array(
             'Zf2auth\Controller\Fbprofiles'    => 'Zf2auth\Controller\FbprofilesController', // <-- For Facebok
         ),
     ),
-    'router'       => array(
+    'router'          => array(
         'routes' => array(
             'users'          => array(
                 'type'          => 'segment',
@@ -242,7 +242,7 @@ return array(
             ),
         ),
     ),
-    'view_manager' => array(
+    'view_manager'    => array(
         'template_path_stack' => array(
             'users'          => __DIR__ . '/../view',
             'roles'          => __DIR__ . '/../view',
@@ -257,4 +257,9 @@ return array(
             'partial/registration' => __DIR__ . '/../view/partial/registration.phtml',
         ),
     ),
+    'facebook_config' => array(
+        'appId'      => '156302757888370',
+        'secret'     => 'fb7124e18b1a4af8683e10ee32a03a10',
+        'channelUrl' => 'http://localhost/rnd',
+    )
 );

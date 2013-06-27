@@ -36,7 +36,7 @@ class LoginForm extends Form
 
         $submit = new Element\Submit('submit');
         $submit->setValue('Log in')
-                ->setAttribute('class', 'btn btn-success  header-btn');
+                ->setAttribute('class', 'btn');
 
         $this->add($username);
         $this->add($password);
