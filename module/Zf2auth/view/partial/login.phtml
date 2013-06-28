@@ -1,11 +1,14 @@
 <?php
 if (!empty($getIdentity)) {
-    $nameString = $userData->username;
-    // $nameString = (strlen($nameString) > 14) ? substr($nameString, 0, 11) . '...' : $nameString;
-    echo "Welcome, " . $nameString;
     ?>
-    | <a href="<?php echo $this->basePath('/users/logout'); ?>">Logout</a>
-
+    <div class="pull-right" style="margin-top: 10px; color: #cccccc;">
+        <?php
+        $nameString = $userData->username;
+        // $nameString = (strlen($nameString) > 14) ? substr($nameString, 0, 11) . '...' : $nameString;
+        echo "Welcome, " . $nameString;
+        ?>
+        | <a href="<?php echo $this->basePath('/users/logout'); ?>">Logout</a>
+    </div>
     <?php
 } else {
 
@@ -29,7 +32,7 @@ if (!empty($getIdentity)) {
 
     echo $this->formElement($form->get('submit'));
     ?>
-    <a href="<?php echo $this->url('fbprofiles', array('action' => 'registration')); ?>" class="btn">FB Login</a>
+    <a href="<?php echo $this->url('fbprofiles', array ('action' => 'registration')); ?>" class="btn">FB Login</a>
     <br>
     <!--            <div class="pull-right forgetdiv loginhome-forget">
                     <label class="checkbox" style="width: 170px;">

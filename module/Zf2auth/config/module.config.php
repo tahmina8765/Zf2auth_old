@@ -260,6 +260,6 @@ return array(
     'facebook_config' => array(
         'appId'      => '156302757888370',
         'secret'     => 'fb7124e18b1a4af8683e10ee32a03a10',
-        'channelUrl' => 'http://localhost/rnd',
+        'channelUrl' => 'http://localhost/',
     )
 );

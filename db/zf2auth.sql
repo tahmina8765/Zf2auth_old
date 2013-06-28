@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.5.2.2
+-- version 3.4.10.1deb1
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: Jun 27, 2013 at 07:12 AM
--- Server version: 5.5.27
--- PHP Version: 5.4.7
+-- Host: localhost
+-- Generation Time: Jun 28, 2013 at 05:47 PM
+-- Server version: 5.5.31
+-- PHP Version: 5.4.17RC1
 
 SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `zf2tutorial`
+-- Database: `zf2auth`
 --
 
 -- --------------------------------------------------------
@@ -58,25 +58,21 @@ INSERT INTO `album` (`id`, `artist`, `title`) VALUES
 DROP TABLE IF EXISTS `fbprofiles`;
 CREATE TABLE IF NOT EXISTS `fbprofiles` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) unsigned NOT NULL,
+  `facebook_id` int(10) unsigned NOT NULL,
   `name` varchar(500) NOT NULL,
   `first_name` varchar(500) NOT NULL,
   `last_name` varchar(500) NOT NULL,
   `link` text NOT NULL,
   `username` varchar(500) NOT NULL,
+  `email` varchar(500) NOT NULL,
   `gender` varchar(500) NOT NULL,
   `timezone` varchar(500) DEFAULT NULL,
   `locale` varchar(500) DEFAULT NULL,
   `verified` tinyint(1) NOT NULL DEFAULT '0',
   `updated_time` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
-
---
--- Dumping data for table `fbprofiles`
---
-
-INSERT INTO `fbprofiles` (`id`, `name`, `first_name`, `last_name`, `link`, `username`, `gender`, `timezone`, `locale`, `verified`, `updated_time`) VALUES
-(1, 'Tahmina Khatoon', 'Tahmina', 'Khatoon', 'asdf', 'tahmina', 'Female', '', '', 1, '');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -94,14 +90,7 @@ CREATE TABLE IF NOT EXISTS `profiles` (
   `modified` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
-
---
--- Dumping data for table `profiles`
---
-
-INSERT INTO `profiles` (`id`, `user_id`, `first_name`, `last_name`, `created`, `modified`) VALUES
-(1, 2, 'Tahmina', 'Khatoon', '2013-06-25 06:24:11', NULL);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -235,14 +224,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `username`, `email`, `password`, `email_check_code`, `is_disabled`, `created`, `modified`) VALUES
-(2, 'tahmina', 'tahmina@yahoo.com', 'e10adc3949ba59abbe56e057f20f883e', 'b301ad74b7294d0c7c7f92ea36f6b776', 1, '0000-00-00 00:00:00', NULL);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
