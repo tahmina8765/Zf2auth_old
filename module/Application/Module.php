@@ -82,12 +82,12 @@ class Module
 
 //        $userRole = 'guest';
 //
-//        if (!$e->getViewModel()->acl->hasResource($route) || !$e->getViewModel()->acl->isAllowed($userRole, $route)) {
-//            $response = $e->getResponse();
-//            //location to page or what ever
-//            $response->getHeaders()->addHeaderLine('Location', $e->getRequest()->getBaseUrl() . '/404');
-//            $response->setStatusCode(303);
-//        }
+        if (!$e->getViewModel()->acl->hasResource($route) || !$e->getViewModel()->acl->isAllowed($userRole, $route)) {
+            $response = $e->getResponse();
+            //location to page or what ever
+            $response->getHeaders()->addHeaderLine('Location', $e->getRequest()->getBaseUrl() . '/404');
+            $response->setStatusCode(303);
+        }
     }
 
     public function getConfig()
